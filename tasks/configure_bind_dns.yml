@@ -1,7 +1,6 @@
 ---
 # Configure OCP4 DNS Server on Helper Node
 
-  tasks:
   - name: insall bind utils
     yum:
       name:
