@@ -57,14 +57,20 @@
   - name: modify interface
     shell: 
       cmd: nmcli connection modify "{{ helper.networkifacename }}"  ipv4.dns "{{ helper.ipaddr }}"
+    tags:
+      - configure_ocpzone_bindutils
 
   - name: reloading connection
     shell: 
       cmd: nmcli connection reload
+    tags:
+      - configure_ocpzone_bindutils
 
   - name: enabling connection
     shell: 
       cmd: nmcli connection up "{{ helper.networkifacename }}"
+    tags:
+      - configure_ocpzone_bindutils
 
 
 
