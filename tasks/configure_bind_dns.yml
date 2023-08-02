@@ -28,19 +28,14 @@
         dest: /etc/named.conf
       notify:
         - restart bind
-    tags:
-      - configure_ocpzone_bindutils
+
     - name: Set zone serial number
       shell: "/usr/local/bin/set-dns-serial.sh"
       register: dymanicserialnumber
-    tags:
-      - configure_ocpzone_bindutils
 
     - name: Setting serial number as a fact
       set_fact:
         serialnumber: "{{ dymanicserialnumber.stdout }}"
-    tags:
-      - configure_ocpzone_bindutils
 
     - name: Write out "{{ dns.domain | lower }}" zone file
       template:
@@ -49,8 +44,6 @@
         mode: '0644'
       notify:
         - restart bind
-    tags:
-      - configure_ocpzone_bindutils
 
     - name: Write out reverse zone file
       template:
