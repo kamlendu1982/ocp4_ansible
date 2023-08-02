@@ -1,7 +1,8 @@
 ---
 # Configure OCP4 TFTP/PXE on Helper Node
 
-  - block:
+  - name: configuring tftp
+    block:
      - name: install tftp and syslinux
        yum:
          name:
