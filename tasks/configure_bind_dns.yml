@@ -67,6 +67,26 @@
       - configure_ocpzone_bindutils
 
   - name: enabling connection
+    ansible.posix.firewalld:
+      service: {{ item }} 
+      permanent: true
+      state: enabled
+    loop:
+      - dhcp
+      - tftp
+      - http
+      - https
+      - dns
+    tags:
+      - configure_ocpzone_bindutils
+
+  - name: enabling connection
+    shell: 
+      cmd: nmcli connection up "{{ helper.networkifacename }}"
+    tags:
+      - configure_ocpzone_bindutils
+
+  - name: enabling connection
     shell: 
       cmd: nmcli connection up "{{ helper.networkifacename }}"
     tags:
