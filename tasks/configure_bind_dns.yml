@@ -1,13 +1,23 @@
 ---
 # Configure OCP4 DNS Server on Helper Node
 
-- hosts: all
-  vars_files:
-    - ../vars/main.yml
-  handlers:
-  - import_tasks: ../handlers/main.yml
-
   tasks:
+  - name: insall bind utils
+    yum:
+      name:
+       - bind
+       - bind-utils
+    tags:
+      - configure_ocpzone_bindutils
+
+  - name: copy set-dns-serial.sh
+    copy:
+      src: ../files/set-dns-serial.sh
+      dest: /usr/local/bin/set-dns-serial.sh
+      mode: '755'
+    become: yes
+    become_user: root
+
   - name: Setup named configuration files
     block:
     - name: Write out named file
@@ -16,13 +26,19 @@
         dest: /etc/named.conf
       notify:
         - restart bind
+    tags:
+      - configure_ocpzone_bindutils
     - name: Set zone serial number
       shell: "/usr/local/bin/set-dns-serial.sh"
       register: dymanicserialnumber
+    tags:
+      - configure_ocpzone_bindutils
 
     - name: Setting serial number as a fact
       set_fact:
         serialnumber: "{{ dymanicserialnumber.stdout }}"
+    tags:
+      - configure_ocpzone_bindutils
 
     - name: Write out "{{ dns.domain | lower }}" zone file
       template:
@@ -31,6 +47,8 @@
         mode: '0644'
       notify:
         - restart bind
+    tags:
+      - configure_ocpzone_bindutils
 
     - name: Write out reverse zone file
       template:
@@ -39,3 +57,6 @@
         mode: '0644'
       notify:
         - restart bind
+    tags:
+      - configure_ocpzone_bindutils
+
