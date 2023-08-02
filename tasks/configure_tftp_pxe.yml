@@ -53,8 +53,8 @@
     tags:
       - configure_tftp
 
-  - block:
-    name: configure apache
+  - name: configure apache
+    block:
      - name: install httpd
        yum:
          name: httpd
@@ -79,8 +79,8 @@
     tags:
       - configure_tftp
 
-  - block:
-    name: configure rootfs coreos
+  - name: configure rootfs coreos
+    block:
      - name: create rootfs dir host
        file:
          path: /var/www/html/rhcos
