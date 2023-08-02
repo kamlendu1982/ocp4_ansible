@@ -1,22 +1,102 @@
 ---
 # Configure OCP4 TFTP/PXE on Helper Node
 
-  - name: install tftp and syslinux
-    yum:
-      name:
-        - tftp-server
-        - syslinux
-      state: present
+  - block:
+     - name: install tftp and syslinux
+       yum:
+         name:
+          - tftp-server
+          - syslinux
+       state: present
+
+     - name: copy tftp startup file
+       copy:
+         src: ../files/start-tftp.sh
+         dest: /usr/local/bin/start-tftp.sh
+         mode: '755'
+     - name: reload daemon-reload
+       shell:
+         cmd: systemctl daemon-reload
+
+     - name: start tftp
+       shell:
+         cmd: systemctl enable --now tftp helper-tftp
+     - name: Populate the default files for tftpboot
+       file:
+         path: /var/lib/tftpboot/pxelinux.cfg
+         state: directory
+         mode: '0755'
+
+     - name: Copy syslinux files needed for PXE boot
+       ansible.posix.synchronize:
+         src: /usr/share/syslinux
+         dest: /var/lib/tftpboot
+
+     - name: Create a directory for hosting the kernel and initramfs for PXE boot
+       file:
+         path: /var/lib/tftpboot/rhcos
+         state: directory
+         mode: '0755'
+     - name: get kernel installer
+       get_url:
+         url: "{{ url_kernel }}"
+         dest: /var/lib/tftpboot/rhcos/kernel
+
+     - name: get initramfs 
+       get_url:
+         url: "{{ url_initramfs }}"
+         dest: /var/lib/tftpboot/rhcos/initramfs.img
+
+     - name: relabel the files for selinux
+       shell:
+         cmd: restorecon -RFv  /var/lib/tftpboot/rhcos
     tags:
       - configure_tftp
 
-  - name: copy tftp startup file
-    copy:
-      src: ../files/start-tftp.sh
-      dest: /usr/local/bin/start-tftp.sh
-      mode: '755'
+  - block:
+    name: configure apache
+     - name: install httpd
+       yum:
+         name: httpd
+         state: present
+     - name: configure it to port 8080
+       replace:
+         path: /etc/httpd/conf/httpd.conf
+         regexp: 'Listen 80'
+         replace: 'Listen 8080'
+     - name: restart httpd
+       service: httpd
+       state: restarted
+       enabled: yes
+     - name: open 8080 port
+       shell:
+         cmd: firewall-cmd --add-port=8080/tcp --permanent
+     - name: reload firewall
+       shell:
+         cmd: firewall-cmd --reload
+    notify:
+      - restart dhcp
     tags:
       - configure_tftp
+
+  - block:
+    name: configure rootfs coreos
+     - name: create rootfs dir host
+       file:
+         path: /var/www/html/rhcos
+         state: directory
+         mode: '0755'
+     - name: get coreos
+       get_url:
+         url: "{{ url_rootfs }}"
+         dest: /var/www/html/rhcos/rootfs.img
+     - name: relabel the files for selinux
+       shell:
+         cmd: restorecon -RFv  /var/www/html/rhcos
+    tags:
+    tags:
+      - configure_tftp
+
 
   - name: Set the bootstrap specific tftp file
     template:
