@@ -10,6 +10,14 @@
     tags:
       - configure_tftp
 
+  - name: copy tftp startup file
+    copy:
+      src: ../files/start-tftp.sh
+      dest: /usr/local/bin/start-tftp.sh
+      mode: '755'
+    tags:
+      - configure_tftp
+
   - name: Set the bootstrap specific tftp file
     template:
       src: ../templates/pxe-bootstrap.j2
