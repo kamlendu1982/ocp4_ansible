@@ -22,7 +22,8 @@
 
     - name: start tftp
       shell:
-        cmd: systemctl enable --now tftp helper-tftp
+        #cmd: systemctl enable --now tftp helper-tftp
+        cmd: systemctl enable --now tftp
     - name: Populate the default files for tftpboot
       file:
         path: /var/lib/tftpboot/pxelinux.cfg
