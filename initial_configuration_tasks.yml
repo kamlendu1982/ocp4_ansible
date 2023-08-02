@@ -1,0 +1,8 @@
+---
+- hosts: all
+  tasks:
+    - name: configure dhcpd
+      include_tasks:
+        file: tasks/configure_dhcpd.yml
+      tags:
+        - configure_dhcpd
