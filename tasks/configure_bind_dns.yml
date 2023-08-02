@@ -66,9 +66,9 @@
     tags:
       - configure_ocpzone_bindutils
 
-  - name: enabling connection
+  - name: opening firewall for services
     ansible.posix.firewalld:
-      service: {{ item }} 
+      service: "{{ item }}"
       permanent: true
       state: enabled
     loop:
@@ -79,16 +79,9 @@
       - dns
     tags:
       - configure_ocpzone_bindutils
-
-  - name: enabling connection
-    shell: 
-      cmd: nmcli connection up "{{ helper.networkifacename }}"
-    tags:
-      - configure_ocpzone_bindutils
-
-  - name: enabling connection
-    shell: 
-      cmd: nmcli connection up "{{ helper.networkifacename }}"
+  - name: restart firewalld
+    shell:
+      cmd: firewall-cmd --reload
     tags:
       - configure_ocpzone_bindutils
 
