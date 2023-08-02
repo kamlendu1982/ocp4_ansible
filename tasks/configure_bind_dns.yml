@@ -6,6 +6,7 @@
       name:
        - bind
        - bind-utils
+      state: present
     tags:
       - configure_ocpzone_bindutils
 

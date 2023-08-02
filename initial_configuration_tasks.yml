@@ -20,4 +20,11 @@
         - configure_ocpzone_bindutils
         - never
 
+    - name: configure tftp and syslinux
+      include_tasks:
+        file: tasks/configure_tftp_pxe.yml
+      tags:
+        - configure_tftp
+        - never
+
 
