@@ -11,11 +11,13 @@
         file: tasks/configure_dhcpd.yml
       tags:
         - configure_dhcpd
+        - never
 
     - name: configure ocp zone on bind utils
       include_tasks:
         file: tasks/configure_bind_dns.yml
       tags:
         - configure_ocpzone_bindutils
+        - never
 
 
