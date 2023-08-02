@@ -7,6 +7,8 @@
       dest: /etc/dhcp/dhcpd.conf
     notify:
       - restart dhcpd
+    tags:
+      - configure_dhcpd
     when: not uefi
   - name: Write out dhcp file (UEFI)
     template:
@@ -15,4 +17,6 @@
     notify:
       - restart dhcpd
     when: uefi
+    tags:
+      - configure_dhcpd
   
