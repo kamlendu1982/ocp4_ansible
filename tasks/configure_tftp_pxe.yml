@@ -1,14 +1,14 @@
 ---
 # Configure OCP4 TFTP/PXE on Helper Node
+
   - name: install tftp and syslinux
-      yum:
+    yum:
       name:
        - tftp-server
        - syslinux
       state: present
     tags:
       - configure_tftp
-
   - name: configuring tftp
     block:
     - name: copy tftp startup file
@@ -66,10 +66,6 @@
         path: /etc/httpd/conf/httpd.conf
         regexp: 'Listen 80'
         replace: 'Listen 8080'
-    - name: restart httpd
-      service: httpd
-      state: restarted
-      enabled: yes
     - name: open 8080 port
       shell:
         cmd: firewall-cmd --add-port=8080/tcp --permanent

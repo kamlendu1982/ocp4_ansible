@@ -1,2 +1,4 @@
+[all]
+10.0.0.73 ansible_user=kamlendu
 [vmhost]
 localhost ansible_connection=local
