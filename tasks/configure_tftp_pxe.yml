@@ -76,7 +76,7 @@
       shell:
         cmd: firewall-cmd --reload
     notify:
-      - restart dhcp
+      - restart httpd
     tags:
       - configure_tftp
 
