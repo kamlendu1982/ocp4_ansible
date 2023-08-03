@@ -31,9 +31,10 @@
         mode: '0755'
 
     - name: Copy syslinux files needed for PXE boot
-      ansible.posix.synchronize:
+      copy:
         src: /usr/share/syslinux
         dest: /var/lib/tftpboot
+        directory_mode:
 
     - name: Create a directory for hosting the kernel and initramfs for PXE boot
       file:
