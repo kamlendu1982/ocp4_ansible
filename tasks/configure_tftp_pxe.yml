@@ -33,7 +33,8 @@
     - name: Copy syslinux files needed for PXE boot
       copy:
         src: /usr/share/syslinux
-        dest: /var/lib/tftpboot
+        dest: /var/lib/tftpboot/
+        remote_src: yes
         directory_mode:
 
     - name: Create a directory for hosting the kernel and initramfs for PXE boot
