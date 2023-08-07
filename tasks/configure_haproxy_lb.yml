@@ -28,3 +28,28 @@
       - restart haproxy
     tags:
       - configure_lb
+
+  - name: Configure SElinux for HAProxy to use the custom ports configured
+    community.general.seport:
+        ports: "{{ item }}"
+        proto: tcp
+        settype: http_port_t
+        state: present
+    loop:
+      - 6443
+      - 22623
+      - 32700
+    tags:
+      - configure_lb
+
+  - name: configure firewall
+    shell:
+      cmd: "{{ item }}"
+    loop:
+      - firewall-cmd --add-service={http,https} --permanent
+      - firewall-cmd --add-port={6443,22623}/tcp --permanent
+      - firewall-cmd --reload
+    tags:
+      - configure_lb
+
+
