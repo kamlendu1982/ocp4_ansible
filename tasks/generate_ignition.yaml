@@ -24,7 +24,7 @@
         dest: /root/ocp4/
     - name: generate the ignition
       shell:
-        cmd: openshift-install create manifests
+        cmd: /usr/local/bin/openshift-install create manifests
         chdir: /root/ocp4
   tags:
     - generate_ignition
