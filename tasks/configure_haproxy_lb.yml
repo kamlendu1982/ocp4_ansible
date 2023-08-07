@@ -33,7 +33,7 @@
     community.general.seport:
         ports: "{{ item }}"
         proto: tcp
-        settype: http_port_t
+        setype: http_port_t
         state: present
     loop:
       - 6443
