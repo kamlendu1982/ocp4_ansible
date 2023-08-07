@@ -41,4 +41,11 @@
         - install_ocp
         - never
 
+    - name: Generate ignition files on utility 
+      include_tasks:
+        file: tasks/generate_ignition.yaml
+      tags:
+        - generate_ignition
+        - never
+
 

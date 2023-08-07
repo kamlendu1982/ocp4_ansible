@@ -1,0 +1,31 @@
+---
+- name: generate ignition on utility
+  block:
+    - name: create .openshift directory 
+      file:
+        path: /root/.openshift
+        state: directory
+        mode: '0755'
+
+    - name: copy pull secret to .openshift. make sure getting pull ecret from https://console.redhat.com/openshift/install/pull-secret and keeping it as /root/pull-secret_ocp4.txt on utility system
+      copy:
+        src: /root/pull-secret_ocp4.txt
+        dest: /root/.openshift/pull-secret
+        remote_src: yes
+
+    - name: create ocp4 directory
+      file:
+        path: /root/ocp4
+        state: directory
+        mode: '0755'
+    - name: copy install-config-base.yaml
+      copy:
+        src: install-config-base.yaml
+        dest: /root/ocp4/
+    - name: generate the ignition
+      shell:
+        cmd: openshift-install create manifests
+        chdir: /root/ocp4
+  tags:
+    - generate_ignition
+    - never
