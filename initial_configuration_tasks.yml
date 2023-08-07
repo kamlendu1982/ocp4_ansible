@@ -34,4 +34,11 @@
         - configure_lb 
         - never
 
+    - name: install OCP installer and cli 
+      include_tasks:
+        file: tasks/configure_haproxy_lb.yml
+      tags:
+        - install_ocp
+        - never
+
 

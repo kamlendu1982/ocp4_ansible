@@ -1,0 +1,32 @@
+---
+block:
+  - name: get ocp installer client
+    get_url:
+        url: "{{ url_installer_client }}"
+        dest: /tmp/
+
+  - name: untar the installer
+    unarchive:
+        src: /tmp/openshift-client-linux.tar.gz
+        dest: /usr/local/bin/
+        remote_src: yes
+
+  - name: get ocp installer binary
+    get_url:
+        url: "{{ url_installer_binary }}"
+        dest: /tmp/
+
+  - name: untar the installer
+    unarchive:
+        src: /tmp/openshift-install-linux.tar.gz
+        dest: /usr/local/bin/
+        remote_src: yes
+
+  - name: create ssh key pairs
+    community.crypto.openssh_keypair:
+        path: /root/.ssh/id_rsa
+        type: rsa
+tags:
+  - install_ocp
+  - never
+
