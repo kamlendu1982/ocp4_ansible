@@ -21,7 +21,7 @@
     - name: copy install-config-base.yaml
       copy:
         src: install-config-base.yaml
-        dest: /root/ocp4/
+        dest: /root/ocp4/install-config.yaml
     - name: generate the manifest
       shell:
         cmd: /usr/local/bin/openshift-install create manifests
