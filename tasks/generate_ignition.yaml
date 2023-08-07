@@ -22,10 +22,28 @@
       copy:
         src: install-config-base.yaml
         dest: /root/ocp4/
-    - name: generate the ignition
+    - name: generate the manifest
       shell:
         cmd: /usr/local/bin/openshift-install create manifests
         chdir: /root/ocp4
+    - name: generate the ignition
+      shell:
+        cmd: /usr/local/bin/openshift-install create ignition-configs
+        chdir: /root/ocp4
+    - name: create and move ignition files html
+      file:
+        path: /var/www/html/ignition
+        mode: '0755'
+        state: directory
+    - name: move ing files
+      copy:
+        src: /root/ocp4/*.ing
+        dest: /var/www/html/ignition/
+        remote_src: yes
+        mode: '0644'
+    - name: set selinux restorecon
+      shell:
+        cmd: restorecon -RFv /var/www/html/
   tags:
     - generate_ignition
     - never
