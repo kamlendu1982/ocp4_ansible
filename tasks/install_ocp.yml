@@ -1,5 +1,6 @@
 ---
-block:
+- name: install ocp biaries
+  block:
   - name: get ocp installer client
     get_url:
         url: "{{ url_installer_client }}"
@@ -26,7 +27,7 @@ block:
     community.crypto.openssh_keypair:
         path: /root/.ssh/id_rsa
         type: rsa
-tags:
+  tags:
   - install_ocp
   - never
 
