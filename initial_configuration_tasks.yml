@@ -27,4 +27,11 @@
         - configure_tftp
         - never
 
+    - name: configure HAProxy as load balancer on utility node
+      include_tasks:
+        file: tasks/configure_tftp_pxe.yml
+      tags:
+        - configure_lb 
+        - never
+
 

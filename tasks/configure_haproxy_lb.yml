@@ -1,15 +1,30 @@
 ---
 # Configure OCP4 HAProxy Load balancer on Helper Node
-- hosts: all
-  vars_files:
-    - ../vars/main.yml
-  handlers:
-  - import_tasks: ../handlers/main.yml
 
-  tasks:
+  - name: install haproxy
+    yum:
+      name:
+        - haproxy
+      state: present
+    tags:
+      - configure_lb
+  - name: set SEBool to allow haproxy connect any port
+    shell:
+      cmd: setsebool -P haproxy_connect_any 1
+    tags:
+      - configure_lb
+
+  - name: backup default HAProxy configuration
+    shell:
+      cmd: mv /etc/haproxy/haproxy.cfg /etc/haproxy/haproxy.cfg.default
+    tags:
+      - configure_lb
+
   - name: Write out haproxy config file
     template:
       src: ../templates/haproxy.cfg.j2
       dest: /etc/haproxy/haproxy.cfg
     notify:
       - restart haproxy
+    tags:
+      - configure_lb
