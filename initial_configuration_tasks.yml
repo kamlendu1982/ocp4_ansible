@@ -48,7 +48,7 @@
         - generate_ignition
         - never
 
-    - name: Generate ignition files on utility 
+    - name: create vms for ocp on hypervisor 
       include_tasks:
         file: tasks/create_ocp_vms.yml
       tags:
