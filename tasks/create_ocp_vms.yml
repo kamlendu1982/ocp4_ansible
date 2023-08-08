@@ -5,8 +5,8 @@
     - virt-install
     - libvirt
    state: present
-   notify:
-    - restart libvirtd
+  notify:
+   - restart libvirtd
   tags:
     - create_vms_ocp
     - never
