@@ -48,4 +48,11 @@
         - generate_ignition
         - never
 
+    - name: Generate ignition files on utility 
+      include_tasks:
+        file: tasks/create_ocp_vms.yml
+      tags:
+        - create_vms_ocp
+        - never
+
 

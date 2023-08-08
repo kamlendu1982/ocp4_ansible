@@ -1,0 +1,58 @@
+---
+- name: create bootstrap vm for ocp
+  block:
+  - name: get the template
+    set_fact:
+      vm_type: "bootstrap"
+    template:
+      src: ocp_vm_creator.j2.sh
+      dest: ocp_vm_creator.sh
+
+  - name: create the vm
+    command: bash ocp_vm_creator.sh
+  tags:
+    - create_vms_ocp
+    - never
+
+- name: create master vm for ocp
+  block:
+  - name: get the template for master 1
+    set_fact:
+      vm_type: "mater01"
+    template:
+      src: ocp_vm_creator.j2.sh
+      dest: ocp_vm_creator_master01.sh
+
+  - name: create the vm
+    command: bash ocp_vm_creator_master01.sh
+
+  - name: get the template for master 2
+    set_fact:
+      vm_type: "mater02"
+    template:
+      src: ocp_vm_creator.j2.sh
+      dest: ocp_vm_creator_master02.sh
+
+  - name: create the vm
+    command: bash ocp_vm_creator_master02.sh
+  tags:
+    - create_vms_ocp
+    - never
+
+- name: create worker vm for ocp
+  block:
+  - name: get the template
+    set_fact:
+      vm_type: "worker01"
+    template:
+      src: ocp_vm_creator.j2.sh
+      dest: ocp_vm_creator_worker01.sh
+
+  - name: create the vm
+    command: bash ocp_vm_creator_worker01.sh
+  tags:
+    - create_vms_ocp
+    - never
+
+
+
