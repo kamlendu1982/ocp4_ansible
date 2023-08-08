@@ -1,16 +1,4 @@
 ---
-- name: install virt-install
-  yum:
-   name:
-    - virt-install
-    - libvirt
-   state: present
-  notify:
-   - restart libvirtd
-  tags:
-    - create_vms_ocp
-    - never
-
 - name: create bootstrap vm for ocp
   block:
   - name: get the template
