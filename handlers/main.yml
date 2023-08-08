@@ -34,3 +34,11 @@
     enabled: yes
   tags:
     - configure_tftp
+
+- name: restart libvirtd
+  service:
+    name: libvirtd
+    state: restarted
+    enabled: yes
+  tags:
+    - create_vms_ocp
