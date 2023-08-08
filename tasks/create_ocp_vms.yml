@@ -3,6 +3,7 @@
   yum:
    name:
     - virt-install
+    - libvirt
    state: present
   tags:
     - create_vms_ocp
