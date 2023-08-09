@@ -5,7 +5,7 @@ CMD="virt-install -n bootstrap.ocp4.example.com --description Bootstrap_Machine_
      --autostart --noreboot \
      --disk pool=default,bus=virtio,size=50 \
      --graphics none --serial pty --console pty \
-     --pxe \
+     --pxe --noautoconsole \
      --network bridge=openshift4,mac=52:54:00:a4:db:5f"
 {% endif %}
 {% if vm_type == 'master01' %}
@@ -14,7 +14,7 @@ CMD="virt-install -n master02.ocp4.example.com --description Master1_MachineforO
      --autostart --noreboot \
      --disk pool=default,bus=virtio,size=50 \
      --graphics none --serial pty --console pty \
-     --pxe \
+     --pxe --noautoconsole \
      --network bridge=openshift4,mac=52:54:00:8b:a1:17"
 {% endif %}
 {% if vm_type == 'master02' %}
@@ -23,7 +23,7 @@ CMD="virt-install -n master02.ocp4.example.com --description Master2MachineforOp
      --autostart --noreboot \
      --disk pool=default,bus=virtio,size=50 \
      --graphics none --serial pty --console pty \
-     --pxe \
+     --pxe --noautoconsole \
      --network bridge=openshift4,mac=52:54:00:ea:8b:9d"
 {% endif %}
 {% if vm_type == 'worker01' %}
@@ -32,7 +32,7 @@ CMD="virt-install -n worker01.ocp4.example.com --description Worker1MachineforOp
      --autostart --noreboot \
      --disk pool=default,bus=virtio,size=50 \
      --graphics none --serial pty --console pty \
-     --pxe \
+     --pxe --noautoconsole \
      --network bridge=openshift4,mac=52:54:00:31:4a:39"
 {% endif %}
 
