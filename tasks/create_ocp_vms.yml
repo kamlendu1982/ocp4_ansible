@@ -18,7 +18,7 @@
   block:
   - name: get the template for master 1
     vars:
-      vm_type: "mater01"
+      vm_type: "master01"
     template:
       src: ocp_vm_creator.j2.sh
       dest: ocp_vm_creator_master01.sh
@@ -28,7 +28,7 @@
 
   - name: get the template for master 2
     vars:
-      vm_type: "mater02"
+      vm_type: "master02"
     template:
       src: ocp_vm_creator.j2.sh
       dest: ocp_vm_creator_master02.sh
