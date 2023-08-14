@@ -27,6 +27,22 @@
   tags:
     - configure_dhcpd
 
+- name: restart tftp
+  service:
+    name: tftp
+    state: restarted
+    enabled: yes
+  tags:
+    - configure_tftp
+
+- name: restart tftph
+  service:
+    name: helper-tftp
+    state: restarted
+    enabled: yes
+  tags:
+    - configure_tftp
+
 - name: restart httpd
   service:
     name: httpd

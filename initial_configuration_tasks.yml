@@ -10,7 +10,7 @@
       include_tasks:
         file: tasks/configure_dhcpd.yml
       tags:
-        - configure_dhcpd
+        #- configure_dhcpd
         - never
 
     - name: configure ocp zone on bind utils

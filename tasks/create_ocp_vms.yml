@@ -10,6 +10,10 @@
 
   - name: create the vm
     command: bash ocp_vm_creator.sh
+
+  - name: wait for VM to spun
+    pause:
+       seconds: 20
   tags:
     - create_vms_ocp
     - never
@@ -26,6 +30,10 @@
   - name: create the vm
     command: bash ocp_vm_creator_master01.sh
 
+  - name: wait for VM to spun
+    pause:
+       seconds: 20
+
   - name: get the template for master 2
     vars:
       vm_type: "master02"
@@ -35,6 +43,11 @@
 
   - name: create the vm
     command: bash ocp_vm_creator_master02.sh
+
+  - name: wait for VM to spun
+    pause:
+       seconds: 20
+
   tags:
     - create_vms_ocp
     - never
