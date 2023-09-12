@@ -74,10 +74,14 @@
 
     - name: move ing files
       copy:
-        src: /root/ocp4/*.ing
+        src: {{ item }}
         dest: /var/www/html/ignition/
         remote_src: yes
         mode: '0644'
+      with_items:
+          - bootstrap.ign
+          - master.ign
+          - worker.ign
 
     - name: set selinux restorecon
       shell:
