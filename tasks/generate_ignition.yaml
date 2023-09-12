@@ -18,7 +18,7 @@
         dest: /root/.openshift/pull-secret
         remote_src: yes
 
-    - name: create ocp4 directory
+    - name: clean ocp4 directory
       file:
         path: /root/ocp4
         state: absent
@@ -30,11 +30,15 @@
         mode: '0755'
 
     - name: read the pull secret
-      set_fact: pull_secret={{lookup('ansible.builtin.file', '/root/.openshift/pull-secret') }}
+      slurp:
+        src: /root/.openshift/pull-secret
+      register: pull_secret
 
 
     - name: read the ssh key
-      set_fact: sshKeys={{lookup('ansible.builtin.file', '/root/.ssh/id_rsa.pub') }}
+      slurp:
+        src: /root/.ssh/id_rsa.pub
+      register: sshkey
 
     - name: copy install-config-base.yaml
       copy:
@@ -45,13 +49,13 @@
       lineinfile:
         path: /root/ocp4/install-config.yaml
         regexp: '^pullSecret: '
-        line: "pullSecret: {{ pull_secret }}"
+        line: "pullSecret: {{ pull_secret['content'] }}"
 
     - name: place the ssh public in install-config
       lineinfile:
         path: /root/ocp4/install-config.yaml
         regexp: '^sshKey: '
-        line: "sshKey: {{ sshKeys }}"
+        line: "sshKey: {{ sshkey['content'] }}"
 
     #- name: generate the manifest
     #  shell:
