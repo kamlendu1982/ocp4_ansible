@@ -79,9 +79,9 @@
         remote_src: yes
         mode: '0644'
       loop:
-          - "bootstrap.ign"
-          - "master.ign"
-          - "worker.ign"
+          - "/root/ocp4/bootstrap.ign"
+          - "/root/ocp4/master.ign"
+          - "/root/ocp4/worker.ign"
 
     - name: set selinux restorecon
       shell:
