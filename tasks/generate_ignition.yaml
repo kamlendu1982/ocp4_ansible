@@ -49,13 +49,13 @@
       lineinfile:
         path: /root/ocp4/install-config.yaml
         regexp: '^pullSecret: '
-        line: "pullSecret: {{ pull_secret['content'] | b64decode }}"
+        line: "pullSecret: '{{ pull_secret['content'] | b64decode }}'"
 
     - name: place the ssh public in install-config
       lineinfile:
         path: /root/ocp4/install-config.yaml
         regexp: '^sshKey: '
-        line: "sshKey: {{ sshkey['content'] | b64decode }}"
+        line: "sshKey: '{{ sshkey['content'] | b64decode }}'"
 
     - name: generate the manifest
       shell:
