@@ -1,9 +1,9 @@
 ---
-url_kernel: 'https://mirror.openshift.com/pub/openshift-v4/dependencies/rhcos/4.12/latest/rhcos-installer-kernel-x86_64'
-url_initramfs: 'https://mirror.openshift.com/pub/openshift-v4/dependencies/rhcos/4.12/latest/rhcos-installer-initramfs.x86_64.img'
-url_rootfs: 'https://mirror.openshift.com/pub/openshift-v4/dependencies/rhcos/4.12/latest/rhcos-live-rootfs.x86_64.img'
-url_installer_client: 'https://mirror.openshift.com/pub/openshift-v4/clients/ocp/4.12.17/openshift-client-linux.tar.gz'
-url_installer_binary: 'https://mirror.openshift.com/pub/openshift-v4/clients/ocp/4.12.17/openshift-install-linux.tar.gz'
+url_kernel: 'https://mirror.openshift.com/pub/openshift-v4/dependencies/rhcos/4.13/4.13.5/rhcos-installer-kernel-x86_64'
+url_initramfs: 'https://mirror.openshift.com/pub/openshift-v4/dependencies/rhcos/4.13/4.13.5/rhcos-installer-initramfs.x86_64.img'
+url_rootfs: 'https://mirror.openshift.com/pub/openshift-v4/dependencies/rhcos/4.13/4.13.5/rhcos-live-rootfs.x86_64.img'
+url_installer_client: 'https://mirror.openshift.com/pub/openshift-v4/clients/ocp/4.13.5/openshift-client-linux.tar.gz'
+url_installer_binary: 'https://mirror.openshift.com/pub/openshift-v4/clients/ocp/4.13.5/openshift-install-linux.tar.gz'
 ppc64le: false
 uefi: false
 disk: vda                                  #disk where you are installing RHCOS on the masters/workers

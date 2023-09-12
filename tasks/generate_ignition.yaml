@@ -1,6 +1,11 @@
 ---
 - name: generate ignition on utility
   block:
+    - name: cleanup .openshift directory 
+      file:
+        path: /root/.openshift
+        state: absent 
+
     - name: create .openshift directory 
       file:
         path: /root/.openshift
@@ -16,34 +21,63 @@
     - name: create ocp4 directory
       file:
         path: /root/ocp4
+        state: absent
+
+    - name: create ocp4 directory
+      file:
+        path: /root/ocp4
         state: directory
         mode: '0755'
+
+    - name: read the pull secret
+      set_fact: pull_secret={{lookup('ansible.builtin.file', '/root/.openshift/pull-secret') }}
+
+
+    - name: read the ssh key
+      set_fact: sshKeys={{lookup('ansible.builtin.file', '/root/.ssh/id_rsa.pub') }}
+
     - name: copy install-config-base.yaml
       copy:
         src: install-config-base.yaml
         dest: /root/ocp4/install-config.yaml
-    - name: generate the manifest
-      shell:
-        cmd: /usr/local/bin/openshift-install create manifests
-        chdir: /root/ocp4
-    - name: generate the ignition
-      shell:
-        cmd: /usr/local/bin/openshift-install create ignition-configs
-        chdir: /root/ocp4
-    - name: create and move ignition files html
-      file:
-        path: /var/www/html/ignition
-        mode: '0755'
-        state: directory
-    - name: move ing files
-      copy:
-        src: /root/ocp4/*.ing
-        dest: /var/www/html/ignition/
-        remote_src: yes
-        mode: '0644'
-    - name: set selinux restorecon
-      shell:
-        cmd: restorecon -RFv /var/www/html/
+
+    - name: place the pull secret in install-config
+      lineinfile:
+        path: /root/ocp4/install-config.yaml
+        regexp: '^pullSecret: '
+        line: "pullSecret: {{ pull_secret }}"
+
+    - name: place the ssh public in install-config
+      lineinfile:
+        path: /root/ocp4/install-config.yaml
+        regexp: '^sshKey: '
+        line: "sshKey: {{ sshKeys }}"
+
+    #- name: generate the manifest
+    #  shell:
+    #    cmd: /usr/local/bin/openshift-install create manifests
+    #    chdir: /root/ocp4
+
+    #- name: generate the ignition
+    #  shell:
+    #    cmd: /usr/local/bin/openshift-install create ignition-configs
+    #    chdir: /root/ocp4
+    #- name: create and move ignition files html
+    #  file:
+    #    path: /var/www/html/ignition
+    #    mode: '0755'
+    #    state: directory
+
+    #- name: move ing files
+    #  copy:
+    #    src: /root/ocp4/*.ing
+    #    dest: /var/www/html/ignition/
+    #    remote_src: yes
+    #    mode: '0644'
+
+    #- name: set selinux restorecon
+    #  shell:
+    #    cmd: restorecon -RFv /var/www/html/
   tags:
     - generate_ignition
     - never

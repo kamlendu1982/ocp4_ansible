@@ -87,7 +87,7 @@
         path: /var/www/html/rhcos
         state: directory
         mode: '0755'
-    - name: get coreos
+    - name: get coreos rootfs
       get_url:
         url: "{{ url_rootfs }}"
         dest: /var/www/html/rhcos/rootfs.img
