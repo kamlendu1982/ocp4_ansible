@@ -74,7 +74,7 @@
 
     - name: move ing files
       copy:
-        src: {{ item }}
+        src: "{{ item }}"
         dest: /var/www/html/ignition/
         remote_src: yes
         mode: '0644'
