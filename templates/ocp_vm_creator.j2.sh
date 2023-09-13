@@ -2,10 +2,10 @@
 {% if vm_type == 'bootstrap' %}
 CMD="virt-install -n bootstrap.ocp4.example.com --description Bootstrap_Machine_for_Openshift4Cluster \
      --os-type=Linux --os-variant=rhel8.0 --ram=4096 --vcpus=4 \
-     --autostart \
+     --autostart --noreboot \
      --disk pool=default,bus=virtio,size=40 \
      --graphics none --serial pty --console pty \
-     --pxe --noautoconsole \
+     --pxe \
      --network bridge=openshift4,mac=52:54:00:a4:db:5f"
 {% endif %}
 {% if vm_type == 'master01' %}
