@@ -67,7 +67,7 @@
     - name: configure it to port 8080
       replace:
         path: /etc/httpd/conf/httpd.conf
-        regexp: 'Listen 80'
+        regexp: '^Listen 80'
         replace: 'Listen 8080'
     - name: open 8080 port
       shell:
