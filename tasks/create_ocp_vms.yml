@@ -16,9 +16,7 @@
        seconds: 150
 
   - name: start the vm
-    community.libvirt.virt:
-       name: "{{ bootstrap['name'].dns['clusterid'].dns['domain'] }}"
-       state: running
+    command: virsh start "{{ bootstrap['name'].dns['clusterid'].dns['domain'] }}"
   tags:
     - create_vms_ocp
     - never
@@ -72,10 +70,12 @@
     - never
 
 - name: start the master vms
-  community.libvirt.virt:
-     name: "{{ item['name'].dns['clusterid'].dns['domain'] }}"
+  command: virsh start "{{ item['name'].dns['clusterid'].dns['domain'] }}"
      state: running
   loop: "{{ masters }}"
+  tags:
+    - create_vms_ocp
+    - never
 
 
 - name: create worker vm for ocp
