@@ -16,7 +16,7 @@
        seconds: 150
 
   - name: start the vm
-    command: virsh start "{{ bootstrap['name'].dns['clusterid'].dns['domain'] }}"
+    command: virsh start bootstrap.ocp4.example.com 
   tags:
     - create_vms_ocp
     - never
@@ -70,8 +70,11 @@
     - never
 
 - name: start the master vms
-  command: virsh start "{{ item['name'].dns['clusterid'].dns['domain'] }}"
-  loop: "{{ masters }}"
+  command: virsh start "{{ item }}"
+  loop:
+    - 'master01.ocp4.example.com'
+    - 'master02.ocp4.example.com'
+    - 'master03.ocp4.example.com'
   tags:
     - create_vms_ocp
     - never
