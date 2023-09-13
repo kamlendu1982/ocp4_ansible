@@ -71,7 +71,6 @@
 
 - name: start the master vms
   command: virsh start "{{ item['name'].dns['clusterid'].dns['domain'] }}"
-     state: running
   loop: "{{ masters }}"
   tags:
     - create_vms_ocp
