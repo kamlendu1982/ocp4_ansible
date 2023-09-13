@@ -68,7 +68,8 @@
       replace:
         path: /etc/httpd/conf/httpd.conf
         regexp: '^Listen '
-        replace: 'Listen 8080'
+        insertafter: '^#Listen '
+        line: 'Listen 8080'
     - name: open 8080 port
       shell:
         cmd: firewall-cmd --add-port=8080/tcp --permanent
