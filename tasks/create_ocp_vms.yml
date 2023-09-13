@@ -13,7 +13,7 @@
 
   - name: wait for VM to spun
     pause:
-       seconds: 20
+       seconds: 80
   tags:
     - create_vms_ocp
     - never
@@ -32,7 +32,7 @@
 
   - name: wait for VM to spun
     pause:
-       seconds: 20
+       seconds: 80
 
   - name: get the template for master 2
     vars:
@@ -46,7 +46,21 @@
 
   - name: wait for VM to spun
     pause:
-       seconds: 20
+       seconds: 80
+
+  - name: get the template for master 3
+    vars:
+      vm_type: "master03"
+    template:
+      src: ocp_vm_creator.j2.sh
+      dest: ocp_vm_creator_master03.sh
+
+  - name: create the vm
+    command: bash ocp_vm_creator_master03.sh
+
+  - name: wait for VM to spun
+    pause:
+       seconds: 80
 
   tags:
     - create_vms_ocp
@@ -64,7 +78,6 @@
   - name: create the vm
     command: bash ocp_vm_creator_worker01.sh
   tags:
-    - create_vms_ocp
     - never
 
 
