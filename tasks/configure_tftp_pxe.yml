@@ -65,7 +65,7 @@
         name: httpd
         state: present
     - name: configure it to port 8080
-      replace:
+      lineinfile:
         path: /etc/httpd/conf/httpd.conf
         regexp: '^Listen '
         insertafter: '^#Listen '
